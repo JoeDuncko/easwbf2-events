@@ -232,5 +232,77 @@
       src="https://kit.fontawesome.com/440750a10d.js"
       crossorigin="anonymous"
     ></script>
+    <script type="module">
+      import {
+        isMonday,
+        isWednesday,
+        isFriday,
+        isSaturday,
+        isSunday,
+        isToday,
+      } from "https://esm.run/date-fns";
+
+      const now = new Date();
+
+      const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
+      const may4th = new Date(`5-4-${new Date().getFullYear()}`);
+
+      const events = [
+        {
+          when: () => isToday(jan1st) || isToday(may4th),
+          name: "Battle Point Event: Unlimited Power",
+          description:
+            "90% off the Battle Point cost for everything, increased number of Reinforcements and Heroes available simultaneously, with Fast Spawn timers and Double XP in effect.",
+          gameModes: [
+            "Galactic Assault",
+            "Capital Supremacy",
+            "Extraction",
+            "Strike",
+          ],
+        },
+        {
+          when: () => isMonday(now), //TODO
+          name: "Fast Spawn Event",
+          description:
+            "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
+          gameModes: [
+            "Galactic Assault",
+            "Capital Supremacy",
+            "Starfighter Assault",
+            "Extraction",
+            "Strike",
+          ],
+        },
+        {
+          when: () => isWednesday(now),
+          name: "Midweek Boost",
+          description: "Triple XP for faster ranking progression.",
+          gameModes: ["All game modes"],
+        },
+        {
+          when: () => isFriday(now),
+          name: "Battle Point Event",
+          description:
+            "Lower Battle Point costs for all reinforcements and increased numbers allowed at a time.",
+          gameModes: [
+            "Galactic Assault",
+            "Capital Supremacy",
+            "Extraction",
+            "Strike",
+          ],
+        },
+        {
+          when: () => isSaturday(now) || isSunday(now),
+          name: "Weekend Boost",
+          description: "Double XP for faster ranking progression.",
+          gameModes: ["All game modes"],
+        },
+      ];
+
+      const todaysEvent = events.find((event) => event.when());
+      console.log("today's event", todaysEvent);
+
+      // TODO: insert today's event into the website
+    </script>
   </body>
 </html>
