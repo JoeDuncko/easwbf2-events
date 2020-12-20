@@ -23,17 +23,11 @@
       href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css"
       rel="stylesheet"
     />
-    <!--
-    Or,
-    Use the following (no variables, supports IE11):
-    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon.min.css" rel="stylesheet" />
-    Learn more: https://www.gethalfmoon.com/docs/customize/#notes-on-browser-compatibility
-  -->
 
     <style>
       .hero {
-        height: 100vh;
-        background: blue;
+        height: 90vh;
+        /* background: blue; */
       }
       .fab,
       .far,
@@ -61,41 +55,18 @@
         2. https://www.gethalfmoon.com/docs/grid-system/#building-a-dashboard
       -->
 
-        <!-- Container-fluid -->
-        <!-- <div class="container-fluid">
-          <div class="d-flex align-items-center justify-content-end hero">
+        <div class="container-fluid">
+          <div class="d-flex align-items-center justify-content-center hero">
             <div class="content">
-              <h1 class="content-title font-size-22">Page title</h1>
-              ...
+              <h1 class="content-title text-muted text-center">
+                Today's EA Star Wars Battlefront 2 Event:
+              </h1>
+              <h2 id="todays-event-name" class="content-title text-center"></h2>
+              <p id="todays-event-description" class="text-center"></p>
+              <div id="todays-event-game-modes" class="text-center"></div>
             </div>
           </div>
-        </div> -->
-
-        <!-- <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-              <h2>Today's event</h2>
-            </div>
-            <div class="col-sm-12 col-md-6">
-              <div class="card p-0">
-                <div class="content">
-                  <h2 class="content-title text-muted m-0">Mondays</h2>
-                  <h3 class="content-title">Fast Spawn Event</h3>
-                  <p>
-                    Spawn timers will be set to 1 sec long in assault modes for
-                    the duration of the event.
-                  </p>
-                  <div>
-                    <span class="badge">Galactic Assault</span>
-                    <span class="badge">Capital Supremacy</span>
-                    <span class="badge">Starfighter Assault</span>
-                    <span class="badge">Extraction</span>
-                    <span class="badge">Strike</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
+        </div>
 
         <div class="container">
           <div class="row">
@@ -261,7 +232,7 @@
           ],
         },
         {
-          when: () => isMonday(now), //TODO
+          when: () => isMonday(now),
           name: "Fast Spawn Event",
           description:
             "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
@@ -302,7 +273,25 @@
       const todaysEvent = events.find((event) => event.when());
       console.log("today's event", todaysEvent);
 
-      // TODO: insert today's event into the website
+      const todaysEventNameDOM = document.querySelector("#todays-event-name");
+      const todaysEventDescriptionDOM = document.querySelector(
+        "#todays-event-description"
+      );
+      const todaysEventGameModesDOM = document.querySelector(
+        "#todays-event-game-modes"
+      );
+
+      if (todaysEvent) {
+        const gameModesHTML = todaysEvent.gameModes
+          .map((gameMode) => `<span class="badge">${gameMode}</span>`)
+          .join("");
+
+        todaysEventNameDOM.innerHTML = todaysEvent.name;
+        todaysEventDescriptionDOM.innerHTML = todaysEvent.description;
+        todaysEventGameModesDOM.innerHTML = gameModesHTML;
+      } else {
+        todaysEventNameDOM.innerHTML = "No event today";
+      }
     </script>
   </body>
 </html>
