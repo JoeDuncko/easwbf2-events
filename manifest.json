@@ -1,0 +1,24 @@
+{
+  "name": "EA Star Wars Battlefront II Community Event Calendar",
+  "short_name": "EASWBF2 Events",
+  "description": "A calendar of current and upcoming events in EA Star Wars Battlefront II (2017).",
+  "theme_color": "rgb(37,40,44)",
+  "background_color": "rgb(37, 40, 44)",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+        "src": "./images/touch/icon192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+    {
+      "src": "./images/touch/icon512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -11,7 +11,9 @@
     <meta name="viewport" content="width=device-width" />
 
     <!-- Favicon and title -->
-    <link rel="icon" href="path/to/fav.png" />
+    <link rel="icon" href="./images/touch/favicon.png" />
+    <link rel="apple-touch-icon" href="./images/touch/icon192.png" />
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
     <title>EA Star Wars Battlefront II Community Event Calendar</title>
     <meta
       name="description"
@@ -25,6 +27,14 @@
     />
 
     <style>
+      /* 
+        Global scope 
+      */
+      :root {
+        /* Change primary color from blue to indigo */
+
+        --navbar-height: auto;
+      }
       .hero {
         height: 90vh;
         /* background: blue; */
@@ -59,7 +69,7 @@
           <div class="d-flex align-items-center justify-content-center hero">
             <div class="content">
               <h1 class="content-title text-muted text-center">
-                Today's EA Star Wars Battlefront 2 Event:
+                Today's EA Star Wars Battlefront II Event:
               </h1>
               <h2 id="todays-event-name" class="content-title text-center"></h2>
               <p id="todays-event-description" class="text-center"></p>
@@ -177,20 +187,28 @@
           </div>
         </div>
 
-        <nav class="navbar navbar-static-botto justify-content-between">
-          <span class="navbar-text">
-            Made with <i class="fab fa-galactic-republic"></i> by&nbsp;
-            <a href="https://joeduncko.com" target="_blank">Joe Duncko</a>. Star
-            Wars Battlefront II <i class="far fa-copyright"></i> Electronic Arts
-            Inc.
-          </span>
-          <span class="navbar-text">
+        <nav class="navbar navbar-static-bottom justify-content-between p-10">
+          <div class="navbar-text">
+            <div>
+              Made with <i class="fab fa-galactic-republic"></i> by&nbsp;
+              <a href="https://joeduncko.com" target="_blank">Joe Duncko</a>.
+            </div>
+          </div>
+
+          <div class="navbar-text">
+            <div>
+              Star Wars Battlefront II
+              <i class="far fa-copyright"></i> Electronic Arts Inc.
+            </div>
+          </div>
+
+          <div class="navbar-text">
             <a
               href="https://github.com/JoeDuncko/easwbf2-events"
               target="_blank"
               ><i class="fas fa-code-branch"></i
             ></a>
-          </span>
+          </div>
         </nav>
       </div>
       <!-- Content wrapper end -->
