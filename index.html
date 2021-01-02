@@ -67,7 +67,7 @@
 
         <div class="container-fluid">
           <div class="d-flex align-items-center justify-content-center hero">
-            <div class="content">
+            <div class="content" style="max-width: 500px">
               <h1 class="content-title text-muted text-center">
                 Today's EA Star Wars Battlefront II Event:
               </h1>
@@ -301,7 +301,7 @@
 
       if (todaysEvent) {
         const gameModesHTML = todaysEvent.gameModes
-          .map((gameMode) => `<span class="badge">${gameMode}</span>`)
+          .map((gameMode) => `<span class="badge m-5">${gameMode}</span>`)
           .join("");
 
         todaysEventNameDOM.innerHTML = todaysEvent.name;
