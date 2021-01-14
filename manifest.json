@@ -4,7 +4,7 @@
   "description": "A calendar of current and upcoming events in EA Star Wars Battlefront II (2017).",
   "theme_color": "#25282C",
   "background_color": "#25282C",
-  "display": "browser",
+  "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "icons": [
