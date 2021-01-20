@@ -11,7 +11,7 @@
     <!-- Favicon and title -->
     <link rel="icon" href="./images/touch/favicon.png" />
     <link rel="apple-touch-icon" href="./images/touch/icon192.png" />
-    <link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
+    <link rel="manifest" href="./manifest.json" crossorigin="use-credentials" />
     <title>EA Star Wars Battlefront II Community Event Calendar</title>
     <meta
       name="description"
@@ -438,7 +438,7 @@
       if ("serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/sw.js");
+          navigator.serviceWorker.register("./sw.js");
         });
       }
     </script>
