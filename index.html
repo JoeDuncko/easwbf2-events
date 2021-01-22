@@ -368,11 +368,17 @@
       const now = utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in UTC since Dice is based in Sweden
 
       const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
+      const jan2nd = new Date(`1-2-${new Date().getFullYear()}`);
       const may4th = new Date(`5-4-${new Date().getFullYear()}`);
+      const may5th = new Date(`5-5-${new Date().getFullYear()}`);
 
       const events = [
         {
-          when: () => isToday(jan1st) || isToday(may4th),
+          when: () =>
+            isToday(jan1st) ||
+            (isToday(jan2nd) && now.getHours() < 6) ||
+            isToday(may4th) ||
+            (isToday(may5th) && now.getHours() < 6),
           name: "Battle Point Event: Unlimited Power",
           description:
             "90% off the Battle Point cost for everything, increased number of Reinforcements and Heroes available simultaneously, with Fast Spawn timers and Double XP in effect.",
