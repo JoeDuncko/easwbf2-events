@@ -104,6 +104,7 @@
               <h2 id="todays-event-name" class="content-title text-center"></h2>
               <p id="todays-event-description" class="text-center"></p>
               <div id="todays-event-game-modes" class="text-center"></div>
+              <!-- <p class="text-center text-muted">Time remaining:</p> -->
             </div>
           </div>
         </div>
@@ -358,6 +359,9 @@
         isSaturday,
         isSunday,
         isToday,
+        addDays,
+        startOfDay,
+        differenceInSeconds,
       } from "https://esm.run/date-fns";
 
       import {
@@ -435,7 +439,21 @@
         },
       ];
 
+      const findNextEvent = (now) => {
+        let nextEvent;
+        let nextEventDate = startOfDay(now);
+        do {
+          nextEventDate = addDays(nextEventDate, 1);
+          nextEvent = events.find((event) =>
+            event.isEventRunning(nextEventDate)
+          );
+        } while (!nextEvent);
+
+        return { nextEvent, nextEventDate };
+      };
+
       const now = utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in UTC since Dice is based in Sweden
+      // const now = new Date("Tue Jan 26 2021 07:00:00 GMT-0500"); // Test date, for testing
 
       const todaysEvent = events.find((event) => event.isEventRunning(now));
 
@@ -456,6 +474,12 @@
         todaysEventDescriptionDOM.innerHTML = todaysEvent.description;
         todaysEventGameModesDOM.innerHTML = gameModesHTML;
       } else {
+        const { nextEvent, nextEventDate } = findNextEvent(now);
+
+        const secondsUntilNextEvent = differenceInSeconds(nextEventDate, now);
+
+        // TODO: Countdown until next event
+
         todaysEventNameDOM.innerHTML = "No event today";
       }
     </script>
