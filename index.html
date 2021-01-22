@@ -292,6 +292,10 @@
                   Wars Battlefront II (2017). See today's SWBF2 event, and the
                   upcoming event schedule.
                 </p>
+                <p>
+                  Events start at 00:01am CET and conclude the following day at
+                  06:00am CET for a total of 30 hours.
+                </p>
               </div>
             </div>
           </div>
@@ -347,14 +351,21 @@
     <script type="module">
       import {
         isMonday,
+        isTuesday,
         isWednesday,
+        isThursday,
         isFriday,
         isSaturday,
         isSunday,
         isToday,
       } from "https://esm.run/date-fns";
 
-      const now = new Date();
+      import {
+        zonedTimeToUtc,
+        utcToZonedTime,
+      } from "https://esm.run/date-fns-tz";
+
+      const now = utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in UTC since Dice is based in Sweden
 
       const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
       const may4th = new Date(`5-4-${new Date().getFullYear()}`);
@@ -373,7 +384,7 @@
           ],
         },
         {
-          when: () => isMonday(now),
+          when: () => isMonday(now) || (isTuesday(now) && now.getHours() < 6),
           name: "Fast Spawn Event",
           description:
             "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
@@ -386,13 +397,14 @@
           ],
         },
         {
-          when: () => isWednesday(now),
+          when: () =>
+            isWednesday(now) || (isThursday(now) && now.getHours() < 6),
           name: "Midweek Boost",
           description: "Triple XP for faster ranking progression.",
           gameModes: ["All game modes"],
         },
         {
-          when: () => isFriday(now),
+          when: () => isFriday(now) || (isSaturday(now) && now.getHours() < 6),
           name: "Battle Point Event",
           description:
             "Lower Battle Point costs for all reinforcements and increased numbers allowed at a time.",
@@ -404,7 +416,10 @@
           ],
         },
         {
-          when: () => isSaturday(now) || isSunday(now),
+          when: () =>
+            isSaturday(now) ||
+            isSunday(now) ||
+            (isMonday(now) && now.getHours() < 6),
           name: "Weekend Boost",
           description: "Double XP for faster ranking progression.",
           gameModes: ["All game modes"],
