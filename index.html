@@ -494,6 +494,9 @@
         },
       ];
 
+      const getNow = () =>
+        utcToZonedTime(new Date(), "Europe/Stockholm").getTime(); // everything must be in CET since Dice is based in Sweden
+
       const findNextEvent = (now) => {
         let nextEvent;
         let nextEventDate = startOfDay(now);
@@ -507,9 +510,15 @@
         return { nextEvent, nextEventDate };
       };
 
-      const createCountdown = (event, countdownDate) => {
+      const createCountdown = ({
+        event,
+        countdownDate,
+        countdownText,
+        doneText,
+      }) => {
         const countdown = setInterval(function () {
-          const nowTime = now.getTime();
+          // Need to get new time every interval
+          const nowTime = getNow();
 
           // Set the date we're counting down to
           const countdownTime = countdownDate.getTime();
@@ -529,17 +538,17 @@
 
           const countdownDOM = document.querySelector(".countdown");
 
-          countdownDOM.innerHTML = `In ${days}d ${hours}h ${minutes}m ${seconds}s`;
+          countdownDOM.innerHTML = `${countdownText} ${days}d ${hours}h ${minutes}m ${seconds}s`;
 
           // If the count down is finished
           if (distance < 0) {
             clearInterval(countdown);
-            countdownDOM.innerHTML = "Starting now...";
+            countdownDOM.innerHTML = doneText;
           }
         }, 1000);
       };
 
-      const now = utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in UTC since Dice is based in Sweden
+      const now = getNow();
       // const now = new Date("Tue Jan 26 2021 07:00:00 GMT-0500"); // Test date, for testing
 
       const todaysEvent = events.find((event) => event.isEventRunning(now));
@@ -557,13 +566,25 @@
           .map((gameMode) => `<span class="badge m-5">${gameMode}</span>`)
           .join("");
 
+        createCountdown({
+          event: todaysEvent,
+          countdownDate: todaysEvent.getEndOfEvent(now),
+          countdownText: "Time remaining: ",
+          doneText: "Event ending...",
+        });
+
         todaysEventNameDOM.innerHTML = todaysEvent.name;
         todaysEventDescriptionDOM.innerHTML = todaysEvent.description;
         todaysEventGameModesDOM.innerHTML = gameModesHTML;
       } else {
         const { nextEvent, nextEventDate } = findNextEvent(now);
 
-        createCountdown(nextEvent, nextEventDate);
+        createCountdown({
+          event: nextEvent,
+          countdownDate: nextEventDate,
+          countdownText: "In",
+          doneText: "Starting now...",
+        });
 
         todaysEventNameDOM.innerHTML = `Next event: ${nextEvent.name}`;
       }
