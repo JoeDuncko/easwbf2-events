@@ -104,7 +104,7 @@
               <h2 id="todays-event-name" class="content-title text-center"></h2>
               <p id="todays-event-description" class="text-center"></p>
               <div id="todays-event-game-modes" class="text-center"></div>
-              <!-- <p class="text-center text-muted">Time remaining:</p> -->
+              <p class="text-center text-muted countdown"></p>
             </div>
           </div>
         </div>
@@ -476,11 +476,40 @@
       } else {
         const { nextEvent, nextEventDate } = findNextEvent(now);
 
-        const secondsUntilNextEvent = differenceInSeconds(nextEventDate, now);
+        // Set the date we're counting down to
+        const countDownDate = nextEventDate.getTime();
 
-        // TODO: Countdown until next event
+        // Update the count down every 1 second
+        const nextEventCountdown = setInterval(function () {
+          // Get today's date and time
+          const nowTime = now.getTime();
 
-        todaysEventNameDOM.innerHTML = "No event today";
+          // Find the distance between now and the count down date
+          const distance = countDownDate - nowTime;
+
+          // Time calculations for days, hours, minutes and seconds
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          const countdownDOM = document.querySelector(".countdown");
+
+          // Display the result in the element with id="demo"
+          countdownDOM.innerHTML = `In ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+          // If the count down is finished, write some text
+          if (distance < 0) {
+            clearInterval(nextEventCountdown);
+            countdownDOM.innerHTML = "Starting now...";
+          }
+        }, 1000);
+
+        todaysEventNameDOM.innerHTML = `Next event: ${nextEvent.name}`;
       }
     </script>
     <script>
