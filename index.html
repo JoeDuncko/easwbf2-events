@@ -360,8 +360,9 @@
         isSunday,
         isToday,
         addDays,
+        addHours,
         startOfDay,
-        differenceInSeconds,
+        endOfDay,
       } from "https://esm.run/date-fns";
 
       import {
@@ -369,6 +370,7 @@
         utcToZonedTime,
       } from "https://esm.run/date-fns-tz";
 
+      // TODO: fuse getEndOfEvent and isEventRunning and getBeginningOfEvent
       const events = [
         {
           isEventRunning: (date) => {
@@ -384,6 +386,29 @@
               (isToday(may5th) && date.getHours() < 6)
             );
           },
+          getEndOfEvent: (date) => {
+            const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
+            const jan2nd = new Date(`1-2-${new Date().getFullYear()}`);
+            const may4th = new Date(`5-4-${new Date().getFullYear()}`);
+            const may5th = new Date(`5-5-${new Date().getFullYear()}`);
+
+            return (
+              isToday(jan1st) ||
+              (isToday(jan2nd) && date.getHours() < 6) ||
+              isToday(may4th) ||
+              (isToday(may5th) && date.getHours() < 6)
+            );
+
+            if (isToday(jan1st)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isToday(jan2nd) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            } else if (isToday(may4th)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isToday(may5th) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            }
+          },
           name: "Battle Point Event: Unlimited Power",
           description:
             "90% off the Battle Point cost for everything, increased number of Reinforcements and Heroes available simultaneously, with Fast Spawn timers and Double XP in effect.",
@@ -397,6 +422,13 @@
         {
           isEventRunning: (date) =>
             isMonday(date) || (isTuesday(date) && date.getHours() < 6),
+          getEndOfEvent: (date) => {
+            if (isMonday(date)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isTuesday(date) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            }
+          },
           name: "Fast Spawn Event",
           description:
             "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
@@ -411,6 +443,13 @@
         {
           isEventRunning: (date) =>
             isWednesday(date) || (isThursday(date) && date.getHours() < 6),
+          getEndOfEvent: (date) => {
+            if (isWednesday(date)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isThursday(date) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            }
+          },
           name: "Midweek Boost",
           description: "Triple XP for faster ranking progression.",
           gameModes: ["All game modes"],
@@ -418,6 +457,13 @@
         {
           isEventRunning: (date) =>
             isFriday(date) || (isSaturday(date) && date.getHours() < 6),
+          getEndOfEvent: (date) => {
+            if (isFriday(date)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isSaturday(date) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            }
+          },
           name: "Battle Point Event",
           description:
             "Lower Battle Point costs for all reinforcements and increased numbers allowed at a time.",
@@ -433,6 +479,15 @@
             isSaturday(date) ||
             isSunday(date) ||
             (isMonday(date) && date.getHours() < 6),
+          getEndOfEvent: (date) => {
+            if (isSaturday(date)) {
+              return addHours(endOfDay(date), 30);
+            } else if (isSunday(date)) {
+              return addHours(endOfDay(date), 6);
+            } else if (isMonday(date) && date.getHours() < 6) {
+              return addHours(startOfDay(date), 6);
+            }
+          },
           name: "Weekend Boost",
           description: "Double XP for faster ranking progression.",
           gameModes: ["All game modes"],
