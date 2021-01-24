@@ -494,8 +494,8 @@
         },
       ];
 
-      const getNow = () =>
-        utcToZonedTime(new Date(), "Europe/Stockholm").getTime(); // everything must be in CET since Dice is based in Sweden
+      const getNow = () => utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in CET since Dice is based in Sweden
+      // const getNow = () => new Date("Mon Jan 25 2021 01:00:00 GMT-0500"); // Test date, for testing
 
       const findNextEvent = (now) => {
         let nextEvent;
@@ -549,7 +549,6 @@
       };
 
       const now = getNow();
-      // const now = new Date("Tue Jan 26 2021 07:00:00 GMT-0500"); // Test date, for testing
 
       const todaysEvent = events.find((event) => event.isEventRunning(now));
 
