@@ -476,13 +476,11 @@
       } else {
         const { nextEvent, nextEventDate } = findNextEvent(now);
 
-        // Set the date we're counting down to
-        const countDownDate = nextEventDate.getTime();
-
-        // Update the count down every 1 second
         const nextEventCountdown = setInterval(function () {
-          // Get today's date and time
           const nowTime = now.getTime();
+
+          // Set the date we're counting down to
+          const countDownDate = nextEventDate.getTime();
 
           // Find the distance between now and the count down date
           const distance = countDownDate - nowTime;
@@ -499,10 +497,9 @@
 
           const countdownDOM = document.querySelector(".countdown");
 
-          // Display the result in the element with id="demo"
           countdownDOM.innerHTML = `In ${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-          // If the count down is finished, write some text
+          // If the count down is finished
           if (distance < 0) {
             clearInterval(nextEventCountdown);
             countdownDOM.innerHTML = "Starting now...";
