@@ -507,6 +507,38 @@
         return { nextEvent, nextEventDate };
       };
 
+      const createCountdown = (event, countdownDate) => {
+        const countdown = setInterval(function () {
+          const nowTime = now.getTime();
+
+          // Set the date we're counting down to
+          const countdownTime = countdownDate.getTime();
+
+          // Find the distance between now and the count down time
+          const distance = countdownTime - nowTime;
+
+          // Time calculations for days, hours, minutes and seconds
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (distance % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          const countdownDOM = document.querySelector(".countdown");
+
+          countdownDOM.innerHTML = `In ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+          // If the count down is finished
+          if (distance < 0) {
+            clearInterval(countdown);
+            countdownDOM.innerHTML = "Starting now...";
+          }
+        }, 1000);
+      };
+
       const now = utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in UTC since Dice is based in Sweden
       // const now = new Date("Tue Jan 26 2021 07:00:00 GMT-0500"); // Test date, for testing
 
@@ -531,35 +563,7 @@
       } else {
         const { nextEvent, nextEventDate } = findNextEvent(now);
 
-        const nextEventCountdown = setInterval(function () {
-          const nowTime = now.getTime();
-
-          // Set the date we're counting down to
-          const countDownDate = nextEventDate.getTime();
-
-          // Find the distance between now and the count down date
-          const distance = countDownDate - nowTime;
-
-          // Time calculations for days, hours, minutes and seconds
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor(
-            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          );
-          const minutes = Math.floor(
-            (distance % (1000 * 60 * 60)) / (1000 * 60)
-          );
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          const countdownDOM = document.querySelector(".countdown");
-
-          countdownDOM.innerHTML = `In ${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-          // If the count down is finished
-          if (distance < 0) {
-            clearInterval(nextEventCountdown);
-            countdownDOM.innerHTML = "Starting now...";
-          }
-        }, 1000);
+        createCountdown(nextEvent, nextEventDate);
 
         todaysEventNameDOM.innerHTML = `Next event: ${nextEvent.name}`;
       }
