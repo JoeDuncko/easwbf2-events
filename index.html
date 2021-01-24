@@ -510,13 +510,19 @@
         return { nextEvent, nextEventDate };
       };
 
+      // See https://stackoverflow.com/a/36592979/3438861
+      const setIntervalImmediately = (func, interval) => {
+        func();
+        return setInterval(func, interval);
+      };
+
       const createCountdown = ({
         event,
         countdownDate,
         countdownText,
         doneText,
       }) => {
-        const countdown = setInterval(function () {
+        const countdown = setIntervalImmediately(() => {
           // Need to get new time every interval
           const nowTime = getNow().getTime();
 
