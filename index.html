@@ -518,7 +518,7 @@
       }) => {
         const countdown = setInterval(function () {
           // Need to get new time every interval
-          const nowTime = getNow();
+          const nowTime = getNow().getTime();
 
           // Set the date we're counting down to
           const countdownTime = countdownDate.getTime();
