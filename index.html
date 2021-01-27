@@ -479,17 +479,13 @@
           ],
         },
         {
-          isEventRunning: (date) =>
-            isSaturday(date) ||
-            isSunday(date) ||
-            (isMonday(date) && date.getHours() < 6),
+          // Weekend event ends Sunday at midnight, which is different
+          isEventRunning: (date) => isSaturday(date) || isSunday(date),
           getEndOfEvent: (date) => {
             if (isSaturday(date)) {
-              return addHours(endOfDay(date), 30);
+              return addHours(endOfDay(date), 24);
             } else if (isSunday(date)) {
-              return addHours(endOfDay(date), 6);
-            } else if (isMonday(date) && date.getHours() < 6) {
-              return addHours(startOfDay(date), 6);
+              return endOfDay(date);
             }
           },
           name: "Weekend Boost",
