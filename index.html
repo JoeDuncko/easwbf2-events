@@ -293,14 +293,17 @@
                 class="content text-center"
               >
                 <p>
-                  A community calendar of current and upcoming events in EA Star
-                  Wars Battlefront II (2017). See today's SWBF2 event, and the
-                  upcoming event schedule.
+                  A calendar of current and upcoming community events in EA Star
+                  Wars Battlefront II (2017). See today's SWBF2 community event,
+                  and the upcoming SWBF2 community event schedule.
                 </p>
                 <p>
-                  Events start at 00:01am CET and conclude the following day at
-                  06:00am CET for a total of 30 hours.
+                  SWBF2 community events start at 00:01am CET and conclude the
+                  following day at 06:00am CET, with the exception of Weekend
+                  Boost, which starts at 06:00am Saturday CET and ends at
+                  11:59pm Sunday CET.
                 </p>
+                <p>All SWBF2 community events last for a total of 30 hours.</p>
               </div>
             </div>
           </div>
@@ -479,10 +482,11 @@
           ],
         },
         {
-          // Weekend event ends Sunday at midnight, which is different
-          isEventRunning: (date) => isSaturday(date) || isSunday(date),
+          // Weekend event starts Saturday at 6am and ends Sunday at midnight, which is different
+          isEventRunning: (date) =>
+            (isSaturday(date) && date.getHours() >= 6) || isSunday(date),
           getEndOfEvent: (date) => {
-            if (isSaturday(date)) {
+            if (isSaturday(date) && date.getHours() >= 6) {
               return addHours(endOfDay(date), 24);
             } else if (isSunday(date)) {
               return endOfDay(date);
