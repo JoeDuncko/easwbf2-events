@@ -6,7 +6,7 @@ EA Star Wars Battlefront II (2017) community event calendar
 
 Star Wars Battlefront II Copyright Electronic Arts Inc.
 
-Responsive images taken directly from [the office EA Star Wars Battlefront II web site](https://www.ea.com/games/starwars/battlefront/star-wars-battlefront-2).
+Responsive images taken directly from [the official EA Star Wars Battlefront II web site](https://www.ea.com/games/starwars/battlefront/star-wars-battlefront-2).
 
 Schedule sourced from [EA's forums](https://answers.ea.com/t5/Announcements/Star-Wars-Battlefront-II-Community-Events-Calendar/td-p/9056197), with the updates specified in the [r/StarWarsBattlefront wiki](https://old.reddit.com/r/StarWarsBattlefront/wiki/faq).
 
