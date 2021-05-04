@@ -399,13 +399,6 @@
             const may4th = new Date(`5-4-${new Date().getFullYear()}`);
             const may5th = new Date(`5-5-${new Date().getFullYear()}`);
 
-            return (
-              isToday(jan1st) ||
-              (isToday(jan2nd) && date.getHours() < 6) ||
-              isToday(may4th) ||
-              (isToday(may5th) && date.getHours() < 6)
-            );
-
             if (isToday(jan1st)) {
               return addHours(endOfDay(date), 6);
             } else if (isToday(jan2nd) && date.getHours() < 6) {
