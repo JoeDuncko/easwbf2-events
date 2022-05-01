@@ -61,8 +61,8 @@
     />
 
     <style>
-      /* 
-        Global scope 
+      /*
+        Global scope
       */
       :root {
         /* Change primary color from blue to indigo */
@@ -365,7 +365,7 @@
         isFriday,
         isSaturday,
         isSunday,
-        isToday,
+        isSameDay,
         addDays,
         addHours,
         startOfDay,
@@ -387,10 +387,10 @@
             const may5th = new Date(`5-5-${new Date().getFullYear()}`);
 
             return (
-              isToday(jan1st) ||
-              (isToday(jan2nd) && date.getHours() < 6) ||
-              isToday(may4th) ||
-              (isToday(may5th) && date.getHours() < 6)
+              isSameDay(date, jan1st) ||
+              (isSameDay(date, jan2nd) && date.getHours() < 6) ||
+              isSameDay(date, may4th) ||
+              (isSameDay(date, may5th) && date.getHours() < 6)
             );
           },
           getEndOfEvent: (date) => {
@@ -399,13 +399,13 @@
             const may4th = new Date(`5-4-${new Date().getFullYear()}`);
             const may5th = new Date(`5-5-${new Date().getFullYear()}`);
 
-            if (isToday(jan1st)) {
+            if (isSameDay(date, jan1st)) {
               return addHours(endOfDay(date), 6);
-            } else if (isToday(jan2nd) && date.getHours() < 6) {
+            } else if (isSameDay(date, jan2nd) && date.getHours() < 6) {
               return addHours(startOfDay(date), 6);
-            } else if (isToday(may4th)) {
+            } else if (isSameDay(date, may4th)) {
               return addHours(endOfDay(date), 6);
-            } else if (isToday(may5th) && date.getHours() < 6) {
+            } else if (isSameDay(date, may5th) && date.getHours() < 6) {
               return addHours(startOfDay(date), 6);
             }
           },
@@ -492,7 +492,7 @@
       ];
 
       const getNow = () => utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in CET since Dice is based in Sweden
-      // const getNow = () => new Date("Mon Jan 25 2021 01:00:00 GMT-0500"); // Test date, for testing
+      // const getNow = () => new Date("Wed May 5 2022 2:00:00 GMT-0500"); // Test date, for testing
 
       const findNextEvent = (now) => {
         let nextEvent;
