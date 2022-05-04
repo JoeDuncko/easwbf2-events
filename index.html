@@ -370,6 +370,7 @@
         addHours,
         startOfDay,
         endOfDay,
+        parse,
       } from "https://esm.run/date-fns";
 
       import {
@@ -381,10 +382,26 @@
       const events = [
         {
           isEventRunning: (date) => {
-            const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
-            const jan2nd = new Date(`1-2-${new Date().getFullYear()}`);
-            const may4th = new Date(`5-4-${new Date().getFullYear()}`);
-            const may5th = new Date(`5-5-${new Date().getFullYear()}`);
+            const jan1st = parse(
+              `${new Date().getFullYear()}-1-1`,
+              "y-M-d",
+              new Date()
+            );
+            const jan2nd = parse(
+              `${new Date().getFullYear()}-1-2`,
+              "y-M-d",
+              new Date()
+            );
+            const may4th = parse(
+              `${new Date().getFullYear()}-5-4`,
+              "y-M-d",
+              new Date()
+            );
+            const may5th = parse(
+              `${new Date().getFullYear()}-5-5`,
+              "y-M-d",
+              new Date()
+            );
 
             return (
               isSameDay(date, jan1st) ||
@@ -394,10 +411,26 @@
             );
           },
           getEndOfEvent: (date) => {
-            const jan1st = new Date(`1-1-${new Date().getFullYear()}`);
-            const jan2nd = new Date(`1-2-${new Date().getFullYear()}`);
-            const may4th = new Date(`5-4-${new Date().getFullYear()}`);
-            const may5th = new Date(`5-5-${new Date().getFullYear()}`);
+            const jan1st = parse(
+              `${new Date().getFullYear()}-1-1`,
+              "y-M-d",
+              new Date()
+            );
+            const jan2nd = parse(
+              `${new Date().getFullYear()}-1-2`,
+              "y-M-d",
+              new Date()
+            );
+            const may4th = parse(
+              `${new Date().getFullYear()}-5-4`,
+              "y-M-d",
+              new Date()
+            );
+            const may5th = parse(
+              `${new Date().getFullYear()}-5-5`,
+              "y-M-d",
+              new Date()
+            );
 
             if (isSameDay(date, jan1st)) {
               return addHours(endOfDay(date), 6);
