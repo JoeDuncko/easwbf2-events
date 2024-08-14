@@ -404,6 +404,8 @@ import Layout from "../layouts/Layout.astro";
                 } else if (isSameDay(date, may5th) && date.getHours() < 6) {
                     return addHours(startOfDay(date), 6);
                 }
+
+                throw new Error("This should never happen");
             },
             name: "Battle Point Event: Unlimited Power",
             description:
@@ -424,6 +426,8 @@ import Layout from "../layouts/Layout.astro";
                 } else if (isTuesday(date) && date.getHours() < 6) {
                     return addHours(startOfDay(date), 6);
                 }
+
+                throw new Error("This should never happen");
             },
             name: "Fast Spawn Event",
             description:
@@ -445,6 +449,8 @@ import Layout from "../layouts/Layout.astro";
                 } else if (isThursday(date) && date.getHours() < 6) {
                     return addHours(startOfDay(date), 6);
                 }
+
+                throw new Error("This should never happen");
             },
             name: "Midweek Boost",
             description: "Triple XP for faster ranking progression.",
@@ -459,6 +465,8 @@ import Layout from "../layouts/Layout.astro";
                 } else if (isSaturday(date) && date.getHours() < 6) {
                     return addHours(startOfDay(date), 6);
                 }
+
+                throw new Error("This should never happen");
             },
             name: "Battle Point Event",
             description:
@@ -480,6 +488,8 @@ import Layout from "../layouts/Layout.astro";
                 } else if (isSunday(date)) {
                     return endOfDay(date);
                 }
+
+                throw new Error("This should never happen");
             },
             name: "Weekend Boost",
             description: "Double XP for faster ranking progression.",
@@ -504,16 +514,23 @@ import Layout from "../layouts/Layout.astro";
     };
 
     // See https://stackoverflow.com/a/36592979/3438861
-    const setIntervalImmediately = (func, interval) => {
+    const setIntervalImmediately = (func: () => void, interval: number) => {
         func();
         return setInterval(func, interval);
     };
+
+    type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
 
     const createCountdown = ({
         event,
         countdownDate,
         countdownText,
         doneText,
+    }: {
+        event: ArrayElement<typeof events>;
+        countdownDate: Date;
+        countdownText: string;
+        doneText: string;
     }) => {
         const countdown = setIntervalImmediately(() => {
             // Need to get new time every interval
