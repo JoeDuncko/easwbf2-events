@@ -6,7 +6,7 @@ export default defineConfig({
     integrations: [
         AstroPWA({
             workbox: {
-                globPatterns: ["**/*.{jpg,png,html,json}"],
+                globPatterns: ["**/*.{jpg,png,html,json,css,js}"],
             },
             manifest: {
                 name: "EA Star Wars Battlefront II Community Event Calendar",
