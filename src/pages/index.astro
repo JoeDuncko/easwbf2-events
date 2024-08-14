@@ -1,5 +1,4 @@
 ---
-import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
@@ -345,7 +344,7 @@ import Layout from "../layouts/Layout.astro";
     // TODO: fuse getEndOfEvent and isEventRunning and getBeginningOfEvent
     const events = [
         {
-            isEventRunning: (date) => {
+            isEventRunning: (date: Date) => {
                 const jan1st = parse(
                     `${new Date().getFullYear()}-1-1`,
                     "y-M-d",
@@ -374,7 +373,7 @@ import Layout from "../layouts/Layout.astro";
                     (isSameDay(date, may5th) && date.getHours() < 6)
                 );
             },
-            getEndOfEvent: (date) => {
+            getEndOfEvent: (date: Date) => {
                 const jan1st = parse(
                     `${new Date().getFullYear()}-1-1`,
                     "y-M-d",
@@ -417,9 +416,9 @@ import Layout from "../layouts/Layout.astro";
             ],
         },
         {
-            isEventRunning: (date) =>
+            isEventRunning: (date: Date) =>
                 isMonday(date) || (isTuesday(date) && date.getHours() < 6),
-            getEndOfEvent: (date) => {
+            getEndOfEvent: (date: Date) => {
                 if (isMonday(date)) {
                     return addHours(endOfDay(date), 6);
                 } else if (isTuesday(date) && date.getHours() < 6) {
@@ -438,9 +437,9 @@ import Layout from "../layouts/Layout.astro";
             ],
         },
         {
-            isEventRunning: (date) =>
+            isEventRunning: (date: Date) =>
                 isWednesday(date) || (isThursday(date) && date.getHours() < 6),
-            getEndOfEvent: (date) => {
+            getEndOfEvent: (date: Date) => {
                 if (isWednesday(date)) {
                     return addHours(endOfDay(date), 6);
                 } else if (isThursday(date) && date.getHours() < 6) {
@@ -452,9 +451,9 @@ import Layout from "../layouts/Layout.astro";
             gameModes: ["All game modes"],
         },
         {
-            isEventRunning: (date) =>
+            isEventRunning: (date: Date) =>
                 isFriday(date) || (isSaturday(date) && date.getHours() < 6),
-            getEndOfEvent: (date) => {
+            getEndOfEvent: (date: Date) => {
                 if (isFriday(date)) {
                     return addHours(endOfDay(date), 6);
                 } else if (isSaturday(date) && date.getHours() < 6) {
@@ -473,9 +472,9 @@ import Layout from "../layouts/Layout.astro";
         },
         {
             // Weekend event starts Saturday at 6am and ends Sunday at midnight, which is different
-            isEventRunning: (date) =>
+            isEventRunning: (date: Date) =>
                 (isSaturday(date) && date.getHours() >= 6) || isSunday(date),
-            getEndOfEvent: (date) => {
+            getEndOfEvent: (date: Date) => {
                 if (isSaturday(date) && date.getHours() >= 6) {
                     return addHours(endOfDay(date), 24);
                 } else if (isSunday(date)) {
@@ -491,7 +490,7 @@ import Layout from "../layouts/Layout.astro";
     const getNow = () => toZonedTime(new Date(), "Europe/Stockholm"); // everything must be in CET since Dice is based in Sweden
     // const getNow = () => new Date("Wed May 5 2022 2:00:00 GMT-0500"); // Test date, for testing
 
-    const findNextEvent = (now) => {
+    const findNextEvent = (now: Date) => {
         let nextEvent;
         let nextEventDate = startOfDay(now);
         do {
@@ -538,6 +537,10 @@ import Layout from "../layouts/Layout.astro";
 
             const countdownDOM = document.querySelector(".countdown");
 
+            if (!countdownDOM) {
+                throw new Error("Could not find required elements in DOM");
+            }
+
             countdownDOM.innerHTML = `${countdownText} ${days}d ${hours}h ${minutes}m ${seconds}s`;
 
             // If the count down is finished
@@ -553,12 +556,21 @@ import Layout from "../layouts/Layout.astro";
     const todaysEvent = events.find((event) => event.isEventRunning(now));
 
     const todaysEventNameDOM = document.querySelector("#todays-event-name");
+
     const todaysEventDescriptionDOM = document.querySelector(
         "#todays-event-description"
     );
     const todaysEventGameModesDOM = document.querySelector(
         "#todays-event-game-modes"
     );
+
+    if (
+        !todaysEventNameDOM ||
+        !todaysEventDescriptionDOM ||
+        !todaysEventGameModesDOM
+    ) {
+        throw new Error("Couldn't find required elements in DOM");
+    }
 
     if (todaysEvent) {
         const gameModesHTML = todaysEvent.gameModes
