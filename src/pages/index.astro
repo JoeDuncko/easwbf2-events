@@ -320,309 +320,283 @@ import Layout from "../layouts/Layout.astro";
             <!-- Content wrapper end -->
         </div>
         <!-- Page wrapper end -->
-
-        <!-- Halfmoon JS -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"
-        ></script>
-        <script
-            src="https://kit.fontawesome.com/440750a10d.js"
-            crossorigin="anonymous"></script>
-
-        <script type="module">
-            import {
-                addDays,
-                addHours,
-                endOfDay,
-                isFriday,
-                isMonday,
-                isSameDay,
-                isSaturday,
-                isSunday,
-                isThursday,
-                isTuesday,
-                isWednesday,
-                parse,
-                startOfDay,
-            } from "https://cdn.skypack.dev/date-fns";
-
-            import { utcToZonedTime } from "https://cdn.skypack.dev/date-fns-tz";
-
-            // TODO: fuse getEndOfEvent and isEventRunning and getBeginningOfEvent
-            const events = [
-                {
-                    isEventRunning: (date) => {
-                        const jan1st = parse(
-                            `${new Date().getFullYear()}-1-1`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const jan2nd = parse(
-                            `${new Date().getFullYear()}-1-2`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const may4th = parse(
-                            `${new Date().getFullYear()}-5-4`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const may5th = parse(
-                            `${new Date().getFullYear()}-5-5`,
-                            "y-M-d",
-                            new Date()
-                        );
-
-                        return (
-                            isSameDay(date, jan1st) ||
-                            (isSameDay(date, jan2nd) && date.getHours() < 6) ||
-                            isSameDay(date, may4th) ||
-                            (isSameDay(date, may5th) && date.getHours() < 6)
-                        );
-                    },
-                    getEndOfEvent: (date) => {
-                        const jan1st = parse(
-                            `${new Date().getFullYear()}-1-1`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const jan2nd = parse(
-                            `${new Date().getFullYear()}-1-2`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const may4th = parse(
-                            `${new Date().getFullYear()}-5-4`,
-                            "y-M-d",
-                            new Date()
-                        );
-                        const may5th = parse(
-                            `${new Date().getFullYear()}-5-5`,
-                            "y-M-d",
-                            new Date()
-                        );
-
-                        if (isSameDay(date, jan1st)) {
-                            return addHours(endOfDay(date), 6);
-                        } else if (
-                            isSameDay(date, jan2nd) &&
-                            date.getHours() < 6
-                        ) {
-                            return addHours(startOfDay(date), 6);
-                        } else if (isSameDay(date, may4th)) {
-                            return addHours(endOfDay(date), 6);
-                        } else if (
-                            isSameDay(date, may5th) &&
-                            date.getHours() < 6
-                        ) {
-                            return addHours(startOfDay(date), 6);
-                        }
-                    },
-                    name: "Battle Point Event: Unlimited Power",
-                    description:
-                        "90% off the Battle Point cost for everything, increased number of Reinforcements and Heroes available simultaneously, with Fast Spawn timers and Double XP in effect.",
-                    gameModes: [
-                        "Galactic Assault",
-                        "Capital Supremacy",
-                        "Extraction",
-                        "Strike",
-                    ],
-                },
-                {
-                    isEventRunning: (date) =>
-                        isMonday(date) ||
-                        (isTuesday(date) && date.getHours() < 6),
-                    getEndOfEvent: (date) => {
-                        if (isMonday(date)) {
-                            return addHours(endOfDay(date), 6);
-                        } else if (isTuesday(date) && date.getHours() < 6) {
-                            return addHours(startOfDay(date), 6);
-                        }
-                    },
-                    name: "Fast Spawn Event",
-                    description:
-                        "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
-                    gameModes: [
-                        "Galactic Assault",
-                        "Capital Supremacy",
-                        "Starfighter Assault",
-                        "Extraction",
-                        "Strike",
-                    ],
-                },
-                {
-                    isEventRunning: (date) =>
-                        isWednesday(date) ||
-                        (isThursday(date) && date.getHours() < 6),
-                    getEndOfEvent: (date) => {
-                        if (isWednesday(date)) {
-                            return addHours(endOfDay(date), 6);
-                        } else if (isThursday(date) && date.getHours() < 6) {
-                            return addHours(startOfDay(date), 6);
-                        }
-                    },
-                    name: "Midweek Boost",
-                    description: "Triple XP for faster ranking progression.",
-                    gameModes: ["All game modes"],
-                },
-                {
-                    isEventRunning: (date) =>
-                        isFriday(date) ||
-                        (isSaturday(date) && date.getHours() < 6),
-                    getEndOfEvent: (date) => {
-                        if (isFriday(date)) {
-                            return addHours(endOfDay(date), 6);
-                        } else if (isSaturday(date) && date.getHours() < 6) {
-                            return addHours(startOfDay(date), 6);
-                        }
-                    },
-                    name: "Battle Point Event",
-                    description:
-                        "Lower Battle Point costs for all reinforcements and increased numbers allowed at a time.",
-                    gameModes: [
-                        "Galactic Assault",
-                        "Capital Supremacy",
-                        "Extraction",
-                        "Strike",
-                    ],
-                },
-                {
-                    // Weekend event starts Saturday at 6am and ends Sunday at midnight, which is different
-                    isEventRunning: (date) =>
-                        (isSaturday(date) && date.getHours() >= 6) ||
-                        isSunday(date),
-                    getEndOfEvent: (date) => {
-                        if (isSaturday(date) && date.getHours() >= 6) {
-                            return addHours(endOfDay(date), 24);
-                        } else if (isSunday(date)) {
-                            return endOfDay(date);
-                        }
-                    },
-                    name: "Weekend Boost",
-                    description: "Double XP for faster ranking progression.",
-                    gameModes: ["All game modes"],
-                },
-            ];
-
-            const getNow = () => utcToZonedTime(new Date(), "Europe/Stockholm"); // everything must be in CET since Dice is based in Sweden
-            // const getNow = () => new Date("Wed May 5 2022 2:00:00 GMT-0500"); // Test date, for testing
-
-            const findNextEvent = (now) => {
-                let nextEvent;
-                let nextEventDate = startOfDay(now);
-                do {
-                    nextEventDate = addDays(nextEventDate, 1);
-                    nextEvent = events.find((event) =>
-                        event.isEventRunning(nextEventDate)
-                    );
-                } while (!nextEvent);
-
-                return { nextEvent, nextEventDate };
-            };
-
-            // See https://stackoverflow.com/a/36592979/3438861
-            const setIntervalImmediately = (func, interval) => {
-                func();
-                return setInterval(func, interval);
-            };
-
-            const createCountdown = ({
-                event,
-                countdownDate,
-                countdownText,
-                doneText,
-            }) => {
-                const countdown = setIntervalImmediately(() => {
-                    // Need to get new time every interval
-                    const nowTime = getNow().getTime();
-
-                    // Set the date we're counting down to
-                    const countdownTime = countdownDate.getTime();
-
-                    // Find the distance between now and the count down time
-                    const distance = countdownTime - nowTime;
-
-                    // Time calculations for days, hours, minutes and seconds
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor(
-                        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                    );
-                    const minutes = Math.floor(
-                        (distance % (1000 * 60 * 60)) / (1000 * 60)
-                    );
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    const countdownDOM = document.querySelector(".countdown");
-
-                    countdownDOM.innerHTML = `${countdownText} ${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-                    // If the count down is finished
-                    if (distance < 0) {
-                        clearInterval(countdown);
-                        countdownDOM.innerHTML = doneText;
-                    }
-                }, 1000);
-            };
-
-            const now = getNow();
-
-            const todaysEvent = events.find((event) =>
-                event.isEventRunning(now)
-            );
-
-            const todaysEventNameDOM =
-                document.querySelector("#todays-event-name");
-            const todaysEventDescriptionDOM = document.querySelector(
-                "#todays-event-description"
-            );
-            const todaysEventGameModesDOM = document.querySelector(
-                "#todays-event-game-modes"
-            );
-
-            if (todaysEvent) {
-                const gameModesHTML = todaysEvent.gameModes
-                    .map(
-                        (gameMode) =>
-                            `<span class="badge m-5">${gameMode}</span>`
-                    )
-                    .join("");
-
-                createCountdown({
-                    event: todaysEvent,
-                    countdownDate: todaysEvent.getEndOfEvent(now),
-                    countdownText: "Time remaining: ",
-                    doneText: "Event ending...",
-                });
-
-                todaysEventNameDOM.innerHTML = todaysEvent.name;
-                todaysEventDescriptionDOM.innerHTML = todaysEvent.description;
-                todaysEventGameModesDOM.innerHTML = gameModesHTML;
-            } else {
-                const { nextEvent, nextEventDate } = findNextEvent(now);
-
-                createCountdown({
-                    event: nextEvent,
-                    countdownDate: nextEventDate,
-                    countdownText: "In",
-                    doneText: "Starting now...",
-                });
-
-                todaysEventNameDOM.innerHTML = `Next event: ${nextEvent.name}`;
-            }
-        </script>
-        <script>
-            // Check that service workers are supported
-            if ("serviceWorker" in navigator) {
-                // Use the window load event to keep the page load performant
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("./sw.js");
-                });
-            }
-        </script>
-
-        <script async defer src="https://sa.swbf2.events/latest.js"></script>
-        <noscript
-            ><img src="https://sa.swbf2.events/noscript.gif" alt="" /></noscript
-        >
     </main>
 </Layout>
+
+<script>
+    import {
+        addDays,
+        addHours,
+        endOfDay,
+        isFriday,
+        isMonday,
+        isSameDay,
+        isSaturday,
+        isSunday,
+        isThursday,
+        isTuesday,
+        isWednesday,
+        parse,
+        startOfDay,
+    } from "date-fns";
+
+    import { toZonedTime } from "date-fns-tz";
+
+    // TODO: fuse getEndOfEvent and isEventRunning and getBeginningOfEvent
+    const events = [
+        {
+            isEventRunning: (date) => {
+                const jan1st = parse(
+                    `${new Date().getFullYear()}-1-1`,
+                    "y-M-d",
+                    new Date()
+                );
+                const jan2nd = parse(
+                    `${new Date().getFullYear()}-1-2`,
+                    "y-M-d",
+                    new Date()
+                );
+                const may4th = parse(
+                    `${new Date().getFullYear()}-5-4`,
+                    "y-M-d",
+                    new Date()
+                );
+                const may5th = parse(
+                    `${new Date().getFullYear()}-5-5`,
+                    "y-M-d",
+                    new Date()
+                );
+
+                return (
+                    isSameDay(date, jan1st) ||
+                    (isSameDay(date, jan2nd) && date.getHours() < 6) ||
+                    isSameDay(date, may4th) ||
+                    (isSameDay(date, may5th) && date.getHours() < 6)
+                );
+            },
+            getEndOfEvent: (date) => {
+                const jan1st = parse(
+                    `${new Date().getFullYear()}-1-1`,
+                    "y-M-d",
+                    new Date()
+                );
+                const jan2nd = parse(
+                    `${new Date().getFullYear()}-1-2`,
+                    "y-M-d",
+                    new Date()
+                );
+                const may4th = parse(
+                    `${new Date().getFullYear()}-5-4`,
+                    "y-M-d",
+                    new Date()
+                );
+                const may5th = parse(
+                    `${new Date().getFullYear()}-5-5`,
+                    "y-M-d",
+                    new Date()
+                );
+
+                if (isSameDay(date, jan1st)) {
+                    return addHours(endOfDay(date), 6);
+                } else if (isSameDay(date, jan2nd) && date.getHours() < 6) {
+                    return addHours(startOfDay(date), 6);
+                } else if (isSameDay(date, may4th)) {
+                    return addHours(endOfDay(date), 6);
+                } else if (isSameDay(date, may5th) && date.getHours() < 6) {
+                    return addHours(startOfDay(date), 6);
+                }
+            },
+            name: "Battle Point Event: Unlimited Power",
+            description:
+                "90% off the Battle Point cost for everything, increased number of Reinforcements and Heroes available simultaneously, with Fast Spawn timers and Double XP in effect.",
+            gameModes: [
+                "Galactic Assault",
+                "Capital Supremacy",
+                "Extraction",
+                "Strike",
+            ],
+        },
+        {
+            isEventRunning: (date) =>
+                isMonday(date) || (isTuesday(date) && date.getHours() < 6),
+            getEndOfEvent: (date) => {
+                if (isMonday(date)) {
+                    return addHours(endOfDay(date), 6);
+                } else if (isTuesday(date) && date.getHours() < 6) {
+                    return addHours(startOfDay(date), 6);
+                }
+            },
+            name: "Fast Spawn Event",
+            description:
+                "Spawn timers will be set to 1 sec long in assault modes for the duration of the event.",
+            gameModes: [
+                "Galactic Assault",
+                "Capital Supremacy",
+                "Starfighter Assault",
+                "Extraction",
+                "Strike",
+            ],
+        },
+        {
+            isEventRunning: (date) =>
+                isWednesday(date) || (isThursday(date) && date.getHours() < 6),
+            getEndOfEvent: (date) => {
+                if (isWednesday(date)) {
+                    return addHours(endOfDay(date), 6);
+                } else if (isThursday(date) && date.getHours() < 6) {
+                    return addHours(startOfDay(date), 6);
+                }
+            },
+            name: "Midweek Boost",
+            description: "Triple XP for faster ranking progression.",
+            gameModes: ["All game modes"],
+        },
+        {
+            isEventRunning: (date) =>
+                isFriday(date) || (isSaturday(date) && date.getHours() < 6),
+            getEndOfEvent: (date) => {
+                if (isFriday(date)) {
+                    return addHours(endOfDay(date), 6);
+                } else if (isSaturday(date) && date.getHours() < 6) {
+                    return addHours(startOfDay(date), 6);
+                }
+            },
+            name: "Battle Point Event",
+            description:
+                "Lower Battle Point costs for all reinforcements and increased numbers allowed at a time.",
+            gameModes: [
+                "Galactic Assault",
+                "Capital Supremacy",
+                "Extraction",
+                "Strike",
+            ],
+        },
+        {
+            // Weekend event starts Saturday at 6am and ends Sunday at midnight, which is different
+            isEventRunning: (date) =>
+                (isSaturday(date) && date.getHours() >= 6) || isSunday(date),
+            getEndOfEvent: (date) => {
+                if (isSaturday(date) && date.getHours() >= 6) {
+                    return addHours(endOfDay(date), 24);
+                } else if (isSunday(date)) {
+                    return endOfDay(date);
+                }
+            },
+            name: "Weekend Boost",
+            description: "Double XP for faster ranking progression.",
+            gameModes: ["All game modes"],
+        },
+    ];
+
+    const getNow = () => toZonedTime(new Date(), "Europe/Stockholm"); // everything must be in CET since Dice is based in Sweden
+    // const getNow = () => new Date("Wed May 5 2022 2:00:00 GMT-0500"); // Test date, for testing
+
+    const findNextEvent = (now) => {
+        let nextEvent;
+        let nextEventDate = startOfDay(now);
+        do {
+            nextEventDate = addDays(nextEventDate, 1);
+            nextEvent = events.find((event) =>
+                event.isEventRunning(nextEventDate)
+            );
+        } while (!nextEvent);
+
+        return { nextEvent, nextEventDate };
+    };
+
+    // See https://stackoverflow.com/a/36592979/3438861
+    const setIntervalImmediately = (func, interval) => {
+        func();
+        return setInterval(func, interval);
+    };
+
+    const createCountdown = ({
+        event,
+        countdownDate,
+        countdownText,
+        doneText,
+    }) => {
+        const countdown = setIntervalImmediately(() => {
+            // Need to get new time every interval
+            const nowTime = getNow().getTime();
+
+            // Set the date we're counting down to
+            const countdownTime = countdownDate.getTime();
+
+            // Find the distance between now and the count down time
+            const distance = countdownTime - nowTime;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            const minutes = Math.floor(
+                (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const countdownDOM = document.querySelector(".countdown");
+
+            countdownDOM.innerHTML = `${countdownText} ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            // If the count down is finished
+            if (distance < 0) {
+                clearInterval(countdown);
+                countdownDOM.innerHTML = doneText;
+            }
+        }, 1000);
+    };
+
+    const now = getNow();
+
+    const todaysEvent = events.find((event) => event.isEventRunning(now));
+
+    const todaysEventNameDOM = document.querySelector("#todays-event-name");
+    const todaysEventDescriptionDOM = document.querySelector(
+        "#todays-event-description"
+    );
+    const todaysEventGameModesDOM = document.querySelector(
+        "#todays-event-game-modes"
+    );
+
+    if (todaysEvent) {
+        const gameModesHTML = todaysEvent.gameModes
+            .map((gameMode) => `<span class="badge m-5">${gameMode}</span>`)
+            .join("");
+
+        createCountdown({
+            event: todaysEvent,
+            countdownDate: todaysEvent.getEndOfEvent(now),
+            countdownText: "Time remaining: ",
+            doneText: "Event ending...",
+        });
+
+        todaysEventNameDOM.innerHTML = todaysEvent.name;
+        todaysEventDescriptionDOM.innerHTML = todaysEvent.description;
+        todaysEventGameModesDOM.innerHTML = gameModesHTML;
+    } else {
+        const { nextEvent, nextEventDate } = findNextEvent(now);
+
+        createCountdown({
+            event: nextEvent,
+            countdownDate: nextEventDate,
+            countdownText: "In",
+            doneText: "Starting now...",
+        });
+
+        todaysEventNameDOM.innerHTML = `Next event: ${nextEvent.name}`;
+    }
+</script>
+<script>
+    // Check that service workers are supported
+    if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./sw.js");
+        });
+    }
+</script>
+
+<script async defer src="https://sa.swbf2.events/latest.js"></script>
+<noscript><img src="https://sa.swbf2.events/noscript.gif" alt="" /></noscript>
