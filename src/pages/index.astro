@@ -281,10 +281,20 @@ import Layout from "../layouts/Layout.astro";
 
                 <nav
                     class="navbar navbar-static-bottom justify-content-between p-10 flex-column"
+                    style={{ height: "auto" }}
                 >
                     <div class="navbar-text">
-                        <div>
-                            Made with <i class="fab fa-galactic-republic"></i> by&nbsp;
+                        <div class="flex center">
+                            Made with <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 496 512"
+                                style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"
+                            >
+                                ><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M248 504C111.3 504 0 392.8 0 256S111.3 8 248 8s248 111.3 248 248-111.3 248-248 248zm0-479.5C120.4 24.5 16.5 128.4 16.5 256S120.4 487.5 248 487.5 479.5 383.6 479.5 256 375.6 24.5 248 24.5zm27.6 21.8v24.6a185.9 185.9 0 0 1 83.6 34.5l17.4-17.4c-28.8-22.1-63.3-36.9-101-41.8zm-55.4 .1c-37.6 4.9-72.2 19.8-100.9 41.9l17.3 17.4h.1c24.1-17.8 52.6-30.1 83.5-34.7V46.4zm12.3 50.2v82.9c-10 2-19.4 5.9-27.7 11.4l-58.6-58.6-21.9 21.9 58.7 58.7c-5.5 8.2-9.5 17.6-11.5 27.6h-82.9v31h82.9c2 10 6 19.3 11.5 27.5l-58.7 58.7 21.9 21.9 58.6-58.6a77.9 77.9 0 0 0 27.7 11.5v82.9h31v-82.9c10.1-2 19.4-6.1 27.6-11.6l58.7 58.7 21.9-21.9-58.7-58.7c5.5-8.2 9.5-17.5 11.5-27.5h82.9v-31h-82.9c-2-10-6-19.4-11.5-27.6l58.7-58.7-21.9-21.9-58.7 58.7c-8.3-5.5-17.6-9.5-27.6-11.5V96.6h-31zm183.2 30.7l-17.4 17.4a186.3 186.3 0 0 1 34.7 83.7h24.6c-5-37.7-19.8-72.3-41.9-101zm-335.6 .1c-22.1 28.7-36.9 63.3-41.9 100.9h24.7c4.6-31 16.8-59.5 34.6-83.5l-17.4-17.4zM38.3 283.7c4.9 37.6 19.8 72.2 41.8 100.9l17.4-17.4c-17.8-24.1-29.9-52.6-34.5-83.5H38.3zm394.7 0c-4.6 31-16.8 59.5-34.7 83.6l17.4 17.4c22.1-28.7 37-63.3 41.9-101h-24.6zM136.7 406.4l-17.4 17.4c28.7 22.1 63.3 37 101 41.9v-24.6c-31-4.6-59.5-16.8-83.6-34.7zm222.5 .1c-24.1 17.8-52.6 30.1-83.6 34.7v24.6c37.7-4.9 72.2-19.8 101-41.9l-17.3-17.4h-.1z"
+                                ></path></svg
+                            > by
                             <a
                                 href="https://joeduncko.com"
                                 target="_blank"
@@ -296,22 +306,51 @@ import Layout from "../layouts/Layout.astro";
                     <div class="navbar-text">
                         <div>
                             Star Wars Battlefront II
-                            <i class="far fa-copyright"></i> Electronic Arts Inc.
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                                style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"
+                                ><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM199.4 312.6c31.2 31.2 81.9 31.2 113.1 0c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9c-50 50-131 50-181 0s-50-131 0-181s131-50 181 0c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0c-31.2-31.2-81.9-31.2-113.1 0s-31.2 81.9 0 113.1z"
+                                ></path></svg
+                            > Electronic Arts Inc.
                         </div>
                     </div>
 
-                    <div class="navbar-text">
+                    <div
+                        class="navbar-text d-flex align-items-center"
+                        style={{ gap: ".5em" }}
+                    >
                         <a
                             href="https://github.com/JoeDuncko/easwbf2-events"
                             target="_blank"
                             referrerpolicy="origin"
-                            rel="noopener"><i class="fas fa-code-branch"></i></a
+                            rel="noopener"
+                            ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 384 512"
+                                style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"
+                                ><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M384 144c0-44.2-35.8-80-80-80s-80 35.8-80 80c0 36.4 24.3 67.1 57.5 76.8-.6 16.1-4.2 28.5-11 36.9-15.4 19.2-49.3 22.4-85.2 25.7-28.2 2.6-57.4 5.4-81.3 16.9v-144c32.5-10.2 56-40.5 56-76.3 0-44.2-35.8-80-80-80S0 35.8 0 80c0 35.8 23.5 66.1 56 76.3v199.3C23.5 365.9 0 396.2 0 432c0 44.2 35.8 80 80 80s80-35.8 80-80c0-34-21.2-63.1-51.2-74.6 3.1-5.2 7.8-9.8 14.9-13.4 16.2-8.2 40.4-10.4 66.1-12.8 42.2-3.9 90-8.4 118.2-43.4 14-17.4 21.1-39.8 21.6-67.9 31.6-10.8 54.4-40.7 54.4-75.9zM80 64c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16zm0 384c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16zm224-320c8.8 0 16 7.2 16 16s-7.2 16-16 16-16-7.2-16-16 7.2-16 16-16z"
+                                ></path></svg
+                            ></a
                         >
                         <a
                             href="https://simpleanalytics.com/swbf2.events?utm_source=swbf2.events"
                             target="_blank"
                             referrerpolicy="origin"
-                            rel="noopener"><i class="fas fa-chart-bar"></i></a
+                            rel="noopener"
+                            ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                                style="width: 1em; height: 1em; vertical-align: middle; fill: currentColor;"
+                                ><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                <path
+                                    d="M332.8 320h38.4c6.4 0 12.8-6.4 12.8-12.8V172.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v134.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V76.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v230.4c0 6.4 6.4 12.8 12.8 12.8zm-288 0h38.4c6.4 0 12.8-6.4 12.8-12.8v-70.4c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v70.4c0 6.4 6.4 12.8 12.8 12.8zm96 0h38.4c6.4 0 12.8-6.4 12.8-12.8V108.8c0-6.4-6.4-12.8-12.8-12.8h-38.4c-6.4 0-12.8 6.4-12.8 12.8v198.4c0 6.4 6.4 12.8 12.8 12.8zM496 384H64V80c0-8.8-7.2-16-16-16H16C7.2 64 0 71.2 0 80v336c0 17.7 14.3 32 32 32h464c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16z"
+                                ></path></svg
+                            ></a
                         >
                     </div>
                 </nav>
