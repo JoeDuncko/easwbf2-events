@@ -528,11 +528,10 @@ import Layout from "../layouts/Layout.astro";
             ],
         },
         {
-            // Weekend event starts Saturday at 6am and ends Sunday at midnight, which is different
             isEventRunning: (date: Date) =>
-                (isSaturday(date) && date.getHours() >= 6) || isSunday(date),
+                (isSaturday(date) || isSunday(date),
             getEndOfEvent: (date: Date) => {
-                if (isSaturday(date) && date.getHours() >= 6) {
+                if (isSaturday(date)) {
                     return addHours(endOfDay(date), 24);
                 } else if (isSunday(date)) {
                     return endOfDay(date);
